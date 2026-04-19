@@ -154,14 +154,9 @@ export default function CredentialCheckPage() {
 
       <footer className="rounded-lg border border-border bg-secondaryBg p-4 text-center text-xs text-textSecondary">
         Powered by{" "}
-        <a
-          href="https://leakcheck.io"
-          target="_blank"
-          rel="noreferrer noopener"
-          className="text-accentBlue hover:underline"
-        >
-          LeakCheck
-        </a>
+        <span className="font-semibold text-accentBlue">
+          DevShield
+        </span>
       </footer>
     </div>
   );

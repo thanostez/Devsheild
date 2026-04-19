@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import Navbar from "@/components/Navbar";
+import Footer from "@/components/layout/Footer";
 import Providers from "@/app/providers";
 import "./globals.css";
 
@@ -43,13 +44,14 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body
-        className={`${inter.variable} ${jetBrainsMono.variable} min-h-screen bg-primaryBg font-body text-textPrimary antialiased`}
+        className={`${inter.variable} ${jetBrainsMono.variable} min-h-screen flex flex-col bg-primaryBg font-body text-textPrimary antialiased`}
       >
         <Providers>
           <Navbar />
-          <main className="mx-auto w-full max-w-7xl px-4 pb-12 pt-8 sm:px-6 lg:px-8">
+          <main className="mx-auto flex-grow w-full max-w-7xl px-4 pb-12 pt-8 sm:px-6 lg:px-8">
             {children}
           </main>
+          <Footer />
         </Providers>
       </body>
     </html>
