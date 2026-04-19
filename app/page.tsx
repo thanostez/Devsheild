@@ -1,8 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { Package, ShieldCheck, ChevronRight, Lock, Activity, Eye, Zap } from "lucide-react";
+import { Package, ShieldCheck, ChevronRight, Lock, Activity, Eye, Zap, Terminal, Copy, Check } from "lucide-react";
 import { motion, Variants } from "framer-motion";
+import { useState } from "react";
 
 const containerVariants: Variants = {
   hidden: { opacity: 0 },
@@ -24,6 +25,14 @@ const itemVariants: Variants = {
 };
 
 export default function Home() {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText("npx devshield");
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
   return (
     <div className="relative min-h-[calc(100vh-4rem)] overflow-hidden">
       {/* Background Glows */}
@@ -84,6 +93,70 @@ export default function Home() {
             <ShieldCheck className="h-4 w-4" />
           </Link>
         </motion.div>
+
+        {/* CLI Integration Terminal */}
+        <motion.div 
+          className="mt-16 flex w-full max-w-md flex-col items-center"
+          variants={itemVariants}
+        >
+          <div className="flex w-full items-center justify-between rounded-t-xl bg-surface px-4 py-2 border border-b-0 border-border/80">
+            <div className="flex gap-2">
+              <div className="h-3 w-3 rounded-full bg-danger"></div>
+              <div className="h-3 w-3 rounded-full bg-warning"></div>
+              <div className="h-3 w-3 rounded-full bg-success"></div>
+            </div>
+            <span className="font-mono text-xs font-semibold text-textSecondary uppercase tracking-widest">CI/CD Terminal</span>
+            <div className="w-10"></div> {/* Spacer for symmetry */}
+          </div>
+          <div className="group relative flex w-full flex-col rounded-b-xl border border-border/80 bg-[#030610] px-5 py-4 shadow-2xl overflow-hidden">
+            {/* Subtle glow inside terminal */}
+            <div className="absolute top-0 left-1/4 h-full w-1/2 bg-accentCyan/5 blur-3xl pointer-events-none"></div>
+            
+            <div className="flex w-full items-center justify-between z-10 mb-2">
+              <div className="flex items-center gap-3 font-mono text-sm sm:text-base">
+                <Terminal className="h-5 w-5 text-accentCyan" />
+                <span className="text-textDim select-none">$</span>
+                <span className="text-white font-medium">npx devshield</span>
+              </div>
+              <button
+                 onClick={handleCopy}
+                 className="rounded-lg p-2 text-textSecondary transition-all hover:bg-surface hover:text-white active:scale-95 border border-transparent hover:border-border/50"
+                 title="Copy command"
+               >
+                {copied ? <Check className="h-4 w-4 text-success" /> : <Copy className="h-4 w-4" />}
+              </button>
+            </div>
+
+            {/* Fake terminal output */}
+            <div className="z-10 flex flex-col font-mono text-[10px] sm:text-xs text-textSecondary border-t border-border/40 pt-4 pb-2 text-left">
+              <span className="text-textPrimary font-bold leading-relaxed break-words">🛡️ DevShield CLI <span className="font-normal text-textSecondary sm:inline block mt-1 sm:mt-0">- Zero-Trust CI/CD Pipeline Auditor</span></span>
+              <span className="mt-3 text-textDim break-words">INFO Shielding dependencies in local lockfile...</span>
+              
+              <div className="mt-4 flex flex-col">
+                <span className="text-white"><span className="text-danger font-bold mr-2">[HIGH]</span>glob</span>
+                <span className="pl-4 sm:pl-6 text-textDim break-words leading-relaxed">↳ Path: glob CLI: Command injection</span>
+                <span className="pl-4 sm:pl-6 text-danger break-words leading-relaxed mt-1">⚠️ Action Required: Update to v16.2.4</span>
+              </div>
+
+              <div className="mt-4 flex flex-col">
+                <span className="text-white flex items-center flex-wrap gap-1">
+                  <span className="bg-danger text-white rounded-[2px] px-1 font-bold">[CRITICAL]</span>
+                  next
+                </span>
+                <span className="pl-4 sm:pl-6 text-textDim break-words leading-relaxed mt-1">↳ Path: Vulnerable to DoS in Server Components</span>
+                <span className="pl-4 sm:pl-6 text-danger break-words leading-relaxed mt-1">⚠️ Action Required: Update to v14.2.35</span>
+              </div>
+
+              <span className="mt-6 py-2 px-3 border border-danger/30 rounded-md bg-danger/10 text-danger font-bold w-full break-words whitespace-normal leading-relaxed text-center sm:text-left sm:w-fit">
+                FAIL: Pipeline Blocked. 2 HIGH/CRITICAL risk(s) detected.
+              </span>
+            </div>
+          </div>
+          <p className="mt-4 text-sm text-textSecondary">
+            Run this directly in your repository to audit your local <span className="font-mono bg-surface/50 px-1.5 py-0.5 rounded text-accentCyan">package.json</span>
+          </p>
+        </motion.div>
+
       </motion.div>
 
       {/* Feature Grids */}

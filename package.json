@@ -9,6 +9,9 @@
     "lint": "next lint",
     "test": "tsx --test lib/__tests__/riskScore.test.ts"
   },
+  "bin": {
+    "devshield": "./bin/devshield.mjs"
+  },
   "dependencies": {
     "@tanstack/react-query": "^5.99.1",
     "@types/d3": "^7.4.3",

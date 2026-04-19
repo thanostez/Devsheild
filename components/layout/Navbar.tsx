@@ -16,6 +16,7 @@ const navItems = [
   { href: "/npm-audit", label: "npm Audit" },
   { href: "/credential-check", label: "Credential Check" },
   { href: "/breach-timeline", label: "Breach Timeline" },
+  { href: "/docs", label: "Documentation" },
 ];
 
 export default function Navbar() {

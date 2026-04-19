@@ -20,12 +20,14 @@ import SubScoreCard from "@/components/npm/SubScoreCard";
 import CVETable from "@/components/npm/CVETable";
 import DownloadChart from "@/components/npm/DownloadChart";
 import PackageMetaCard from "@/components/npm/PackageMetaCard";
+import DependencyTree from "@/components/npm/DependencyTree";
 import BulkUpload from "@/components/npm/BulkUpload";
+import GithubScanner from "@/components/npm/GithubScanner";
 import Skeleton from "@/components/ui/Skeleton";
 import { analyzePackage } from "@/lib/npmAuditClient";
 import { getRiskColor, getRiskLabel } from "@/lib/riskScore";
 
-type Tab = "single" | "bulk" | "compare";
+type Tab = "single" | "github" | "bulk" | "compare";
 
 function LoadingSkeleton() {
   return (
@@ -98,9 +100,10 @@ export default function NpmAuditPage() {
 
   return (
     <div className="space-y-6 animate-fade-up">
-      <div className="inline-flex rounded-lg border border-border bg-secondaryBg p-1">
+      <div className="flex flex-row flex-wrap gap-2 w-full rounded-lg border border-border bg-secondaryBg p-1 sm:w-max">
         {[
           { key: "single", label: "Single Package", icon: Shield },
+          { key: "github", label: "GitHub Repo", icon: Sparkles },
           { key: "bulk", label: "Bulk Upload", icon: Upload },
           { key: "compare", label: "Compare", icon: Sparkles },
         ].map((item) => (
@@ -108,14 +111,14 @@ export default function NpmAuditPage() {
             key={item.key}
             type="button"
             onClick={() => setTab(item.key as Tab)}
-            className={`inline-flex items-center gap-2 rounded-md px-3 py-2 text-sm transition ${
+            className={`flex-1 sm:flex-none justify-center inline-flex items-center gap-2 rounded-md px-3 py-2 text-xs sm:text-sm transition-colors ${
               tab === item.key
-                ? "bg-primaryBg text-textPrimary"
-                : "text-textSecondary hover:text-textPrimary"
+                ? "bg-primaryBg text-textPrimary shadow-sm"
+                : "text-textSecondary hover:text-textPrimary hover:bg-primaryBg/50"
             }`}
           >
-            <item.icon className="h-4 w-4" />
-            {item.label}
+            <item.icon className="h-4 w-4 shrink-0" />
+            <span className="truncate">{item.label}</span>
           </button>
         ))}
       </div>
@@ -192,12 +195,16 @@ export default function NpmAuditPage() {
                   github={singleQuery.data.github}
                 />
               </div>
+
+              <DependencyTree packageName={singleQuery.data.packageName} />
             </div>
           ) : null}
         </>
       ) : null}
 
       {tab === "bulk" ? <BulkUpload /> : null}
+
+      {tab === "github" ? <GithubScanner /> : null}
 
       {tab === "compare" ? (
         <section className="space-y-4 rounded-xl border border-border bg-secondaryBg p-6 shadow-card">
