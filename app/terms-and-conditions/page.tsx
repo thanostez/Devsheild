@@ -14,7 +14,7 @@ export default function TermsAndConditions() {
         <section>
           <h2 className="text-xl font-semibold text-white mb-2">2. Description of Service</h2>
           <p>
-            DevShield provides tools for npm package risk analysis and credential breach monitoring. These services are provided "as is" and without warranty of any kind.
+            DevShield provides tools for npm package risk analysis and credential breach monitoring. These services are provided &quot;as is&quot; and without warranty of any kind.
           </p>
         </section>
 
