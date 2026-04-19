@@ -130,7 +130,7 @@ export default function Navbar() {
               })}
               <div className="mt-4 flex flex-col gap-3 border-t border-border/50 pt-4">
                 <a
-                  href="https://github.com/thanostez/Devsheild"
+                  href="https://github.com/thanostez/"
                   target="_blank"
                   rel="noreferrer noopener"
                   className="flex shrink-0 items-center justify-center gap-2 rounded-xl bg-gradient-to-br from-surface to-surface/50 border border-border px-4 py-3 text-sm font-bold text-white transition-all hover:border-textSecondary/50 hover:shadow-lg"
