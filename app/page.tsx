@@ -40,11 +40,13 @@ export default function Home() {
       <div className="absolute -right-[10%] top-[30%] h-[400px] w-[400px] rounded-full bg-accentPurple/20 blur-[120px]" />
       <div className="absolute left-[30%] top-[60%] h-[600px] w-[600px] rounded-full bg-accentCyan/10 blur-[150px]" />
 
-      <motion.div
+      {/* 1. HERO SECTION */}
+      <motion.section
         className="relative z-10 mx-auto flex max-w-5xl flex-col items-center justify-center pt-20 text-center sm:pt-32"
         variants={containerVariants}
         initial="hidden"
         animate="visible"
+        aria-label="Hero"
       >
         <motion.div variants={itemVariants}>
           <span className="inline-flex items-center gap-2 rounded-full border border-accentBlue/30 bg-accentBlue/10 px-4 py-1.5 text-sm font-medium text-accentBlue backdrop-blur-md transition-colors hover:bg-accentBlue/20">
@@ -56,7 +58,7 @@ export default function Home() {
           </span>
         </motion.div>
 
-        <motion.h1 
+        <motion.h1
           className="mt-8 text-4xl font-extrabold tracking-tight text-white sm:text-6xl lg:text-7xl"
           variants={itemVariants}
         >
@@ -66,7 +68,7 @@ export default function Home() {
           </span>
         </motion.h1>
 
-        <motion.p 
+        <motion.p
           className="mx-auto mt-6 max-w-2xl text-lg text-textSecondary sm:text-xl leading-relaxed"
           variants={itemVariants}
         >
@@ -74,7 +76,7 @@ export default function Home() {
           monitoring into one modern, security-focused toolkit for elite developers.
         </motion.p>
 
-        <motion.div 
+        <motion.div
           className="mt-10 flex flex-col gap-4 sm:flex-row sm:gap-6"
           variants={itemVariants}
         >
@@ -95,7 +97,7 @@ export default function Home() {
         </motion.div>
 
         {/* CLI Integration Terminal */}
-        <motion.div 
+        <motion.div
           className="mt-16 flex w-full max-w-md flex-col items-center"
           variants={itemVariants}
         >
@@ -111,7 +113,7 @@ export default function Home() {
           <div className="group relative flex w-full flex-col rounded-b-xl border border-border/80 bg-[#030610] px-5 py-4 shadow-2xl overflow-hidden">
             {/* Subtle glow inside terminal */}
             <div className="absolute top-0 left-1/4 h-full w-1/2 bg-accentCyan/5 blur-3xl pointer-events-none"></div>
-            
+
             <div className="flex w-full items-center justify-between z-10 mb-2">
               <div className="flex items-center gap-3 font-mono text-sm sm:text-base">
                 <Terminal className="h-5 w-5 text-accentCyan" />
@@ -119,10 +121,10 @@ export default function Home() {
                 <span className="text-white font-medium">npx devshield</span>
               </div>
               <button
-                 onClick={handleCopy}
-                 className="rounded-lg p-2 text-textSecondary transition-all hover:bg-surface hover:text-white active:scale-95 border border-transparent hover:border-border/50"
-                 title="Copy command"
-               >
+                onClick={handleCopy}
+                className="rounded-lg p-2 text-textSecondary transition-all hover:bg-surface hover:text-white active:scale-95 border border-transparent hover:border-border/50"
+                title="Copy command"
+              >
                 {copied ? <Check className="h-4 w-4 text-success" /> : <Copy className="h-4 w-4" />}
               </button>
             </div>
@@ -131,7 +133,7 @@ export default function Home() {
             <div className="z-10 flex flex-col font-mono text-[10px] sm:text-xs text-textSecondary border-t border-border/40 pt-4 pb-2 text-left">
               <span className="text-textPrimary font-bold leading-relaxed break-words">🛡️ DevShield CLI <span className="font-normal text-textSecondary sm:inline block mt-1 sm:mt-0">- Zero-Trust CI/CD Pipeline Auditor</span></span>
               <span className="mt-3 text-textDim break-words">INFO Shielding dependencies in local lockfile...</span>
-              
+
               <div className="mt-4 flex flex-col">
                 <span className="text-white"><span className="text-danger font-bold mr-2">[HIGH]</span>glob</span>
                 <span className="pl-4 sm:pl-6 text-textDim break-words leading-relaxed">↳ Path: glob CLI: Command injection</span>
@@ -157,15 +159,16 @@ export default function Home() {
           </p>
         </motion.div>
 
-      </motion.div>
+      </motion.section>
 
       {/* Feature Grids */}
-      <motion.div 
+      <motion.section
         className="relative z-10 mx-auto mt-24 grid max-w-7xl gap-6 pb-20 sm:grid-cols-2 lg:grid-cols-3"
         variants={containerVariants}
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, margin: "-100px" }}
+        aria-label="Features"
       >
         {[
           {
@@ -211,7 +214,7 @@ export default function Home() {
             bg: "bg-danger/10 border-danger/20"
           }
         ].map((feat, idx) => (
-          <motion.div 
+          <motion.div
             key={idx}
             className="group relative overflow-hidden rounded-2xl border border-border bg-secondaryBg/40 p-8 shadow-card backdrop-blur-md transition-all hover:-translate-y-1 hover:border-textSecondary/30 hover:bg-surface/60 hover:shadow-2xl hover:shadow-accentBlue/10"
             variants={itemVariants}
@@ -221,12 +224,12 @@ export default function Home() {
             </div>
             <h3 className="mb-2 text-xl font-bold text-white">{feat.title}</h3>
             <p className="text-textSecondary">{feat.desc}</p>
-            
+
             {/* Glow effect on hover */}
             <div className="absolute -inset-px -z-10 bg-gradient-to-br from-white/5 to-transparent opacity-0 transition-opacity group-hover:opacity-100 rounded-2xl" />
           </motion.div>
         ))}
-      </motion.div>
+      </motion.section>
     </div>
   );
 }
