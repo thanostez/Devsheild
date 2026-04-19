@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { useEffect, useRef, useState } from "react";
@@ -86,6 +87,7 @@ export default function DependencyTree({ packageName }: { packageName: string })
     return () => {
       active = false;
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [packageName]);
 
   const renderGraph = (nodes: Node[], links: Link[]) => {
@@ -155,7 +157,7 @@ export default function DependencyTree({ packageName }: { packageName: string })
       .attr("stroke", "#0F172A")
       .attr("stroke-width", 2)
       .style("cursor", "pointer")
-      // @ts-ignore
+      // @ts-expect-error D3 typings are complex
       .call(drag(simulation));
 
     // Add glowing filter

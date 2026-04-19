@@ -65,6 +65,7 @@ export default function BreachCard({ source }: { source: BreachSource }) {
     <article className="rounded-xl border border-border bg-secondaryBg p-5 shadow-card">
       <div className="flex items-start justify-between gap-3">
         <div className="flex items-center gap-3">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={`https://www.google.com/s2/favicons?domain=${encodeURIComponent(guessDomain(source.name))}&sz=64`}
             alt={source.name}

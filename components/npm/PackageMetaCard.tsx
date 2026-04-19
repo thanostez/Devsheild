@@ -62,6 +62,7 @@ export default function PackageMetaCard({ metadata, github, packageName }: Packa
             key={`${maintainer.name}-${maintainer.email}`}
             className="flex items-center gap-2 rounded-md border border-border bg-primaryBg px-3 py-2"
           >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={`https://ui-avatars.com/api/?name=${encodeURIComponent(maintainer.name || "Maintainer")}&background=1A2035&color=F1F5F9&size=32`}
               alt={maintainer.name || "Maintainer"}
