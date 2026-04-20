@@ -10,14 +10,56 @@ interface ParsedPackageJson {
   devDependencies?: Record<string, string>;
 }
 
+type SecretSeverity = "LOW" | "MEDIUM" | "HIGH" | "CRITICAL";
+
+interface SecretFinding {
+  type: string;
+  severity: SecretSeverity;
+  filePath: string;
+  line: number;
+  confidence: number;
+}
+
+interface RepositorySecretScanResponse {
+  owner: string;
+  repo: string;
+  ref: string;
+  scannedFiles: number;
+  totalCandidateFiles: number;
+  truncated: boolean;
+  findings: SecretFinding[];
+}
+
+function parseGitHubInput(value: string): { owner: string; repo: string } | null {
+  const input = value.trim();
+  if (!input) return null;
+
+  if (input.includes("github.com/")) {
+    const parts = input.split("github.com/")[1]?.split("/") || [];
+    const owner = parts[0];
+    const repo = parts[1];
+    if (!owner || !repo) return null;
+    return { owner, repo };
+  }
+
+  const parts = input.split("/");
+  if (parts.length < 2) return null;
+  const owner = parts[0]?.trim();
+  const repo = parts[1]?.trim();
+  if (!owner || !repo) return null;
+  return { owner, repo };
+}
+
 export default function GithubScanner() {
   const [urlInput, setUrlInput] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [isFetchingRepo, setIsFetchingRepo] = useState(false);
+  const [isSecretScanning, setIsSecretScanning] = useState(false);
   const [packageNames, setPackageNames] = useState<string[]>([]);
   const [progress, setProgress] = useState({ done: 0, total: 0 });
   const [isScanning, setIsScanning] = useState(false);
   const [rows, setRows] = useState<BulkScanRow[]>([]);
+  const [secretScan, setSecretScan] = useState<RepositorySecretScanResponse | null>(null);
 
   const progressPercent = useMemo(() => {
     if (progress.total === 0) return 0;
@@ -46,34 +88,18 @@ export default function GithubScanner() {
   };
 
   const fetchGithubPackage = async () => {
-    let owner = "";
-    let repo = "";
-    
-    try {
-      if (urlInput.includes("github.com/")) {
-        const parts = urlInput.split("github.com/")[1].split("/");
-        owner = parts[0];
-        repo = parts[1];
-      } else {
-        const parts = urlInput.split("/");
-        if (parts.length >= 2) {
-          owner = parts[0];
-          repo = parts[1];
-        } else {
-          throw new Error("Invalid GitHub URL or format.");
-        }
-      }
-      
-      if (!owner || !repo) throw new Error("Invalid GitHub URL format.");
-    } catch {
+    const parsed = parseGitHubInput(urlInput);
+    if (!parsed) {
       setError("Please provide a valid GitHub format (e.g., facebook/react or https://github.com/facebook/react)");
       return;
     }
+    const { owner, repo } = parsed;
 
     setIsFetchingRepo(true);
     setError(null);
     setPackageNames([]);
     setRows([]);
+    setSecretScan(null);
 
     try {
       const response = await fetch(`/api/github/package-json?owner=${owner}&repo=${repo}`);
@@ -87,6 +113,33 @@ export default function GithubScanner() {
       setError(err instanceof Error ? err.message : "Failed to fetch repository.");
     } finally {
       setIsFetchingRepo(false);
+    }
+  };
+
+  const startSecretScan = async () => {
+    const parsed = parseGitHubInput(urlInput);
+    if (!parsed) {
+      setError("Please provide a valid GitHub format before running repository secret scan.");
+      return;
+    }
+
+    setIsSecretScanning(true);
+    setError(null);
+    setSecretScan(null);
+
+    try {
+      const response = await fetch(
+        `/api/github/secret-scan?owner=${encodeURIComponent(parsed.owner)}&repo=${encodeURIComponent(parsed.repo)}`,
+      );
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.error || "Repository secret scan failed.");
+      }
+      setSecretScan(data as RepositorySecretScanResponse);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Repository secret scan failed.");
+    } finally {
+      setIsSecretScanning(false);
     }
   };
 
@@ -128,6 +181,13 @@ export default function GithubScanner() {
           className="flex items-center justify-center gap-2 rounded-lg bg-surface px-4 py-2 text-sm font-semibold text-textPrimary border border-border transition hover:bg-white hover:text-primaryBg disabled:opacity-50"
         >
           {isFetchingRepo ? <Loader2 className="h-4 w-4 animate-spin" /> : "Fetch Repo"}
+        </button>
+        <button
+          onClick={startSecretScan}
+          disabled={isSecretScanning || !urlInput.trim()}
+          className="flex items-center justify-center gap-2 rounded-lg border border-border bg-primaryBg px-4 py-2 text-sm font-semibold text-textPrimary transition hover:bg-surface disabled:opacity-50"
+        >
+          {isSecretScanning ? <Loader2 className="h-4 w-4 animate-spin" /> : "Secret Scan Repo"}
         </button>
       </div>
 
@@ -192,6 +252,61 @@ export default function GithubScanner() {
               ))}
             </tbody>
           </table>
+        </div>
+      ) : null}
+
+      {secretScan ? (
+        <div className="space-y-3 rounded-lg border border-border bg-primaryBg p-4">
+          <h3 className="text-sm font-semibold text-textPrimary">Repository Secret Scan</h3>
+          <p className="text-xs text-textSecondary">
+            Scanned <span className="font-semibold text-textPrimary">{secretScan.scannedFiles}</span> files on{" "}
+            <code>{secretScan.ref}</code>. Findings:{" "}
+            <span className={`font-semibold ${secretScan.findings.length > 0 ? "text-danger" : "text-success"}`}>
+              {secretScan.findings.length}
+            </span>
+            {secretScan.truncated ? " (limited scan scope)" : ""}
+          </p>
+
+          {secretScan.findings.length > 0 ? (
+            <div className="overflow-x-auto">
+              <table className="min-w-full text-left text-xs">
+                <thead className="text-[11px] uppercase text-textSecondary">
+                  <tr>
+                    <th className="px-2 py-2">Severity</th>
+                    <th className="px-2 py-2">Type</th>
+                    <th className="px-2 py-2">File</th>
+                    <th className="px-2 py-2">Line</th>
+                    <th className="px-2 py-2">Confidence</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-border">
+                  {secretScan.findings.slice(0, 40).map((finding, index) => (
+                    <tr key={`${finding.filePath}-${finding.line}-${finding.type}-${index}`}>
+                      <td className="px-2 py-2">
+                        <span
+                          className={`rounded px-2 py-0.5 font-semibold ${
+                            finding.severity === "CRITICAL"
+                              ? "bg-danger/20 text-danger"
+                              : finding.severity === "HIGH"
+                                ? "bg-warning/20 text-warning"
+                                : "bg-accentBlue/20 text-accentBlue"
+                          }`}
+                        >
+                          {finding.severity}
+                        </span>
+                      </td>
+                      <td className="px-2 py-2 text-textPrimary">{finding.type}</td>
+                      <td className="px-2 py-2 font-mono text-[11px] text-textSecondary">{finding.filePath}</td>
+                      <td className="px-2 py-2 text-textSecondary">{finding.line}</td>
+                      <td className="px-2 py-2 text-textSecondary">{Math.round(finding.confidence * 100)}%</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          ) : (
+            <p className="text-xs text-success">No secrets detected in scanned files.</p>
+          )}
         </div>
       ) : null}
     </section>
