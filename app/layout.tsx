@@ -48,17 +48,26 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: "DevShield | Zero-Trust Developer Security",
-    description: "Audit npm packages, track project risk, and catch credential leaks before deployment.",
+    title: "DevShield | Zero-Trust npm Security & Leak Monitoring",
+    description: "Scan npm dependencies for CVEs, uncover risky packages, and monitor credential leaks with actionable insights before every release and deployment.",
     url: "/",
     siteName: "DevShield",
+    images: [
+      {
+        url: "/opengraph-image",
+        width: 1200,
+        height: 630,
+        alt: "DevShield security dashboard preview",
+      },
+    ],
     type: "website",
     locale: "en_US",
   },
   twitter: {
     card: "summary_large_image",
-    title: "DevShield Security",
-    description: "Audit before you install. Check before you trust.",
+    title: "DevShield | Zero-Trust npm Security & Leak Monitoring",
+    description: "Scan npm dependencies for CVEs, uncover risky packages, and monitor credential leaks with actionable insights before every release and deployment.",
+    images: ["/opengraph-image"],
     creator: "@devshield",
   },
   alternates: {
