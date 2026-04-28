@@ -17,12 +17,13 @@ const jetBrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || "https://devshield.vercel.app"),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || "https://devsheild.live"),
   title: {
-    default: "DevShield | Zero-Trust npm Security & Credential Checker",
+    default: "DevShield | Audit npm Packages and Check Credential Breaches",
     template: "%s | DevShield Security",
   },
-  description: "DevShield is an elite, zero-trust developer security toolkit. Audit npm dependencies for CVE vulnerabilities and monitor credential leaks all in one seamless CI/CD pipeline.",
+  description:
+    "Audit npm dependencies for vulnerabilities, assess package risk, and check credential breach exposure in one developer security toolkit.",
   keywords: [
     "npm audit", 
     "dependency risk analyzer", 
@@ -48,8 +49,9 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: "DevShield | Zero-Trust npm Security & Leak Monitoring",
-    description: "Scan npm dependencies for CVEs, uncover risky packages, and monitor credential leaks with actionable insights before every release and deployment.",
+    title: "DevShield | Audit npm Packages and Check Credential Breaches",
+    description:
+      "Scan npm dependencies for CVEs, uncover risky packages, and monitor credential leak exposure before release.",
     url: "/",
     siteName: "DevShield",
     images: [
@@ -65,8 +67,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "DevShield | Zero-Trust npm Security & Leak Monitoring",
-    description: "Scan npm dependencies for CVEs, uncover risky packages, and monitor credential leaks with actionable insights before every release and deployment.",
+    title: "DevShield | Audit npm Packages and Check Credential Breaches",
+    description:
+      "Scan npm dependencies for CVEs, uncover risky packages, and monitor credential leak exposure before release.",
     images: ["/opengraph-image"],
     creator: "@devshield",
   },

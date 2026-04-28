@@ -72,8 +72,9 @@ export default function Home() {
           className="mx-auto mt-6 max-w-2xl text-lg text-textSecondary sm:text-xl leading-relaxed"
           variants={itemVariants}
         >
-          DevShield unifies npm package risk analysis and credential breach
-          monitoring into one modern, security-focused toolkit for elite developers.
+          DevShield helps you audit npm dependencies before you install and check
+          security signals before you trust. It unifies package risk analysis and
+          credential breach monitoring in one modern developer toolkit.
         </motion.p>
 
         <motion.div
@@ -170,6 +171,7 @@ export default function Home() {
         viewport={{ once: true, margin: "-100px" }}
         aria-label="Features"
       >
+        <h2 className="sr-only">DevShield security features</h2>
         {[
           {
             icon: Package,
