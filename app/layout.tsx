@@ -4,6 +4,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/layout/Footer";
 import Providers from "@/app/providers";
 import { Analytics } from "@vercel/analytics/next";
+import GoogleAdsense from "@/components/GoogleAdsense";
 import "./globals.css";
 
 const inter = Inter({
@@ -86,11 +87,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <head>
-        <script
-          async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1270139027361859"
-          crossOrigin="anonymous"
-        />
+        <GoogleAdsense publisherId="ca-pub-1270139027361859" />
       </head>
       <body
         className={`${inter.variable} ${jetBrainsMono.variable} min-h-screen flex flex-col bg-primaryBg font-body text-textPrimary antialiased`}

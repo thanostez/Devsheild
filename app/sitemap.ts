@@ -9,6 +9,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/credential-check',
     '/breach-timeline',
     '/docs',
+    '/blog',
+    '/blog/software-supply-chain-attacks',
+    '/blog/mastering-npm-audit',
+    '/blog/credential-hygiene-2024',
     '/privacy-policy',
     '/terms-and-conditions',
   ];

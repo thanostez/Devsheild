@@ -32,6 +32,11 @@ export default function DocsPage() {
               <p className="text-sm text-textSecondary leading-relaxed mb-4">
                 Fetch real-time comprehensive risk metrics for any npm package. Evaluates the National Vulnerability Database (NVD) for active Zero-Day exploits, assesses maintenance timelines, popularity metrics, and assigns a master Risk Score (0-100).
               </p>
+              <ul className="text-xs text-textDim space-y-2">
+                <li className="flex items-center gap-2">• CVE Vulnerability Mapping</li>
+                <li className="flex items-center gap-2">• License Compliance Scanning</li>
+                <li className="flex items-center gap-2">• Maintenance Health Check</li>
+              </ul>
             </div>
 
             <div className="rounded-xl border border-border bg-secondaryBg p-6 shadow-card">
@@ -42,6 +47,7 @@ export default function DocsPage() {
               <p className="text-sm text-textSecondary leading-relaxed mb-4">
                 Copy and paste any public GitHub repository URL into the auditor. We utilize the GitHub REST API to securely extract the `package.json` file remotely and bulk analyze every single nested dependency for security risks natively in the browser.
               </p>
+              <p className="text-xs text-accentBlue font-medium">No installation required. Works entirely in-browser.</p>
             </div>
             
             <div className="rounded-xl border border-border bg-secondaryBg p-6 shadow-card">
@@ -57,7 +63,7 @@ export default function DocsPage() {
         </section>
 
         {/* CLI Section */}
-        <section>
+        <section id="cli-docs">
           <h2 className="mb-6 flex items-center gap-2 text-2xl font-bold border-b border-border/50 pb-2">
             <Terminal className="h-6 w-6 text-accentBlue" />
             <span className="text-white">The DevShield CLI</span>
@@ -91,11 +97,19 @@ export default function DocsPage() {
             </div>
           </div>
 
-          <div className="rounded-xl bg-accentBlue/10 border border-accentBlue/20 p-5 mt-6">
-            <h4 className="text-accentBlue font-bold mb-2">Pipeline Execution</h4>
-            <p className="text-sm text-textSecondary leading-relaxed">
-              When executed, the CLI will iterate through your local `package-lock.json` and communicate with vulnerability databases. If any dependency contains a <strong>HIGH</strong> or <strong>CRITICAL</strong> severity CVE, the CLI will forcefully exit with `Exit Code 1`, preventing your pull request from being merged.
-            </p>
+          <div className="grid gap-6 sm:grid-cols-2">
+            <div className="rounded-xl bg-accentBlue/10 border border-accentBlue/20 p-5">
+              <h4 className="text-accentBlue font-bold mb-2">Pipeline Execution</h4>
+              <p className="text-sm text-textSecondary leading-relaxed">
+                When executed, the CLI will iterate through your local `package-lock.json` and communicate with vulnerability databases. If any dependency contains a <strong>HIGH</strong> or <strong>CRITICAL</strong> severity CVE, the CLI will forcefully exit with `Exit Code 1`, preventing your pull request from being merged.
+              </p>
+            </div>
+            <div className="rounded-xl bg-accentPurple/10 border border-accentPurple/20 p-5">
+              <h4 className="text-accentPurple font-bold mb-2">Custom Thresholds</h4>
+              <p className="text-sm text-textSecondary leading-relaxed">
+                You can configure the CLI to fail on different severity levels using the <code>--level</code> flag. Example: <code>npx devshield --level moderate</code>.
+              </p>
+            </div>
           </div>
         </section>
 
@@ -108,9 +122,45 @@ export default function DocsPage() {
           <p className="text-textSecondary leading-relaxed mb-4">
             Our credential leak monitoring utilizes strict <strong>k-Anonymity privacy architectures</strong>. When you query an email for historical breaches across our 7B+ record database, the query is cryptographically hashed via `SHA-1` directly inside your web browser. 
           </p>
+          <div className="bg-secondaryBg border border-border p-6 rounded-xl mb-6">
+            <h4 className="text-white font-bold mb-4 flex items-center gap-2">
+              <Zap className="h-4 w-4 text-warning" />
+              Technical Implementation
+            </h4>
+            <ol className="space-y-4 text-sm text-textSecondary list-decimal pl-5">
+              <li>Your email is converted to a SHA-1 hash locally (e.g., <code>5baa61e4c9b93...</code>).</li>
+              <li>We take only the first 5 characters (<code>5baa6</code>) and send them to our API.</li>
+              <li>The API returns all known breached hashes starting with <code>5baa6</code>.</li>
+              <li>Your browser checks if your full hash is in that list.</li>
+            </ol>
+          </div>
           <p className="text-textSecondary leading-relaxed">
             Only the first 5 characters of the hash are transmitted to our Edge APIs to find bucketed prefix-matches, ensuring your plaintext passwords and identifiers are completely obfuscated from our network layer. We see nothing, and we log nothing.
           </p>
+        </section>
+
+        {/* Security Best Practices */}
+        <section className="rounded-2xl border border-accentBlue/30 bg-accentBlue/5 p-8">
+          <h2 className="mb-4 text-2xl font-bold text-white">Developer Security Best Practices</h2>
+          <p className="text-textSecondary mb-6">Maintaining a secure development environment is a continuous process. Here are our top recommendations:</p>
+          <div className="grid gap-4 sm:grid-cols-2">
+            <div className="flex gap-3">
+              <div className="h-6 w-6 rounded-full bg-accentBlue/20 text-accentBlue flex-shrink-0 flex items-center justify-center text-xs font-bold">1</div>
+              <p className="text-sm text-textSecondary">Never commit <code>.env</code> files or hardcoded credentials to version control.</p>
+            </div>
+            <div className="flex gap-3">
+              <div className="h-6 w-6 rounded-full bg-accentBlue/20 text-accentBlue flex-shrink-0 flex items-center justify-center text-xs font-bold">2</div>
+              <p className="text-sm text-textSecondary">Use <code>npm audit</code> or DevShield CLI in every CI/CD pipeline run.</p>
+            </div>
+            <div className="flex gap-3">
+              <div className="h-6 w-6 rounded-full bg-accentBlue/20 text-accentBlue flex-shrink-0 flex items-center justify-center text-xs font-bold">3</div>
+              <p className="text-sm text-textSecondary">Enable 2FA on your npm, GitHub, and cloud provider accounts.</p>
+            </div>
+            <div className="flex gap-3">
+              <div className="h-6 w-6 rounded-full bg-accentBlue/20 text-accentBlue flex-shrink-0 flex items-center justify-center text-xs font-bold">4</div>
+              <p className="text-sm text-textSecondary">Keep your global dependencies updated to patch security holes in dev tools.</p>
+            </div>
+          </div>
         </section>
       </div>
       

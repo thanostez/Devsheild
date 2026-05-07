@@ -292,6 +292,46 @@ export default function NpmAuditPage() {
           </div>
         </section>
       ) : null}
+
+      <section className="mt-12 space-y-8 rounded-2xl border border-border bg-surface/30 p-8 shadow-card">
+        <div>
+          <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-2">
+            <Bug className="h-6 w-6 text-accentBlue" />
+            Why Audit NPM Packages?
+          </h2>
+          <p className="text-textSecondary leading-relaxed">
+            The modern web is built on open-source, but this convenience comes with inherent risks. Every package you install brings with it a web of dependencies that could potentially contain security vulnerabilities, malicious code, or outdated logic.
+          </p>
+        </div>
+
+        <div className="grid gap-6 md:grid-cols-2">
+          <div className="space-y-3">
+            <h3 className="text-lg font-bold text-white">Transitive Dependency Risk</h3>
+            <p className="text-sm text-textSecondary">
+              When you install a single package, you might actually be adding 100+ nested dependencies. A vulnerability in any one of those can compromise your entire application. Our tool maps these relationships so you can see the full picture.
+            </p>
+          </div>
+          <div className="space-y-3">
+            <h3 className="text-lg font-bold text-white">Maintenance & Health Signals</h3>
+            <p className="text-sm text-textSecondary">
+              A package with zero CVEs isn't necessarily safe if it hasn't been updated in 3 years. We analyze maintenance patterns, commit frequency, and issue resolution times to give you a "Health Score" beyond just security.
+            </p>
+          </div>
+          <div className="space-y-3">
+            <h3 className="text-lg font-bold text-white">Zero-Day Vulnerabilities</h3>
+            <p className="text-sm text-textSecondary">
+              By monitoring the National Vulnerability Database (NVD) and GitHub Advisory Database in real-time, we ensure you have the latest information on exploits before they become widespread.
+            </p>
+          </div>
+          <div className="space-y-3">
+            <h3 className="text-lg font-bold text-white">CI/CD Integration</h3>
+            <p className="text-sm text-textSecondary">
+              Don't just audit manually. Use the DevShield CLI to automate these checks in your build pipeline, ensuring that a vulnerable package never reaches your production environment.
+            </p>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }
+

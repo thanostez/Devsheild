@@ -17,6 +17,7 @@ const navItems = [
   { href: "/credential-check", label: "Credential Check" },
   { href: "/breach-timeline", label: "Breach Timeline" },
   { href: "/docs", label: "Documentation" },
+  { href: "/blog", label: "Blog" },
 ];
 
 export default function Navbar() {
@@ -81,7 +82,7 @@ export default function Navbar() {
 
         <div className="hidden items-center gap-3 md:flex">
           <a
-            href="https://github.com/thanostez/Devsheild/"
+            href="https://github.com/thanostez"
             target="_blank"
             rel="noreferrer noopener"
             className="group flex items-center gap-2 rounded-xl border border-border bg-surface/50 px-4 py-2 text-sm font-medium text-textSecondary backdrop-blur-md transition-all hover:bg-textPrimary hover:text-primaryBg hover:border-textPrimary hover:shadow-[0_0_15px_rgba(255,255,255,0.3)]"
@@ -130,7 +131,7 @@ export default function Navbar() {
               })}
               <div className="mt-4 flex flex-col gap-3 border-t border-border/50 pt-4">
                 <a
-                  href="https://github.com/thanostez/Devsheild/"
+                  href="https://github.com/thanostez"
                   target="_blank"
                   rel="noreferrer noopener"
                   className="flex shrink-0 items-center justify-center gap-2 rounded-xl bg-gradient-to-br from-surface to-surface/50 border border-border px-4 py-3 text-sm font-bold text-white transition-all hover:border-textSecondary/50 hover:shadow-lg"

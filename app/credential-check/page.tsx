@@ -152,6 +152,33 @@ export default function CredentialCheckPage() {
         </div>
       ) : null}
 
+      <section className="mt-12 rounded-2xl border border-border bg-surface/30 p-8 shadow-card">
+        <h2 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
+          <ShieldCheck className="h-6 w-6 text-accentBlue" />
+          Credential Security Guide
+        </h2>
+        <div className="grid gap-8 md:grid-cols-3">
+          <div className="space-y-3">
+            <h3 className="text-sm font-bold text-accentCyan uppercase tracking-wider">The Risk</h3>
+            <p className="text-sm text-textSecondary leading-relaxed">
+              Credential stuffing is responsible for over 60% of unauthorized login attempts. When one site is breached, attackers use automated tools to try those same credentials on every other major platform.
+            </p>
+          </div>
+          <div className="space-y-3">
+            <h3 className="text-sm font-bold text-accentCyan uppercase tracking-wider">The Solution</h3>
+            <p className="text-sm text-textSecondary leading-relaxed">
+              Use unique, complex passwords for every service. A password manager is the only effective way to manage the 100+ unique credentials the average user now possesses.
+            </p>
+          </div>
+          <div className="space-y-3">
+            <h3 className="text-sm font-bold text-accentCyan uppercase tracking-wider">Our Privacy</h3>
+            <p className="text-sm text-textSecondary leading-relaxed">
+              We never see your password. Our "Zero-Knowledge" check uses mathematical hashes to verify breach status without ever transmitting your actual password or email to our database.
+            </p>
+          </div>
+        </div>
+      </section>
+
       <footer className="rounded-lg border border-border bg-secondaryBg p-4 text-center text-xs text-textSecondary">
         Powered by{" "}
         <span className="font-semibold text-accentBlue">
