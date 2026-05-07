@@ -173,7 +173,7 @@ export default function CredentialCheckPage() {
           <div className="space-y-3">
             <h3 className="text-sm font-bold text-accentCyan uppercase tracking-wider">Our Privacy</h3>
             <p className="text-sm text-textSecondary leading-relaxed">
-              We never see your password. Our "Zero-Knowledge" check uses mathematical hashes to verify breach status without ever transmitting your actual password or email to our database.
+              We never see your password. Our &quot;Zero-Knowledge&quot; check uses mathematical hashes to verify breach status without ever transmitting your actual password or email to our database.
             </p>
           </div>
         </div>

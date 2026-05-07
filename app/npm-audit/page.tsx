@@ -314,7 +314,7 @@ export default function NpmAuditPage() {
           <div className="space-y-3">
             <h3 className="text-lg font-bold text-white">Maintenance & Health Signals</h3>
             <p className="text-sm text-textSecondary">
-              A package with zero CVEs isn't necessarily safe if it hasn't been updated in 3 years. We analyze maintenance patterns, commit frequency, and issue resolution times to give you a "Health Score" beyond just security.
+              A package with zero CVEs isn&apos;t necessarily safe if it hasn&apos;t been updated in 3 years. We analyze maintenance patterns, commit frequency, and issue resolution times to give you a &quot;Health Score&quot; beyond just security.
             </p>
           </div>
           <div className="space-y-3">
@@ -326,7 +326,7 @@ export default function NpmAuditPage() {
           <div className="space-y-3">
             <h3 className="text-lg font-bold text-white">CI/CD Integration</h3>
             <p className="text-sm text-textSecondary">
-              Don't just audit manually. Use the DevShield CLI to automate these checks in your build pipeline, ensuring that a vulnerable package never reaches your production environment.
+              Don&apos;t just audit manually. Use the DevShield CLI to automate these checks in your build pipeline, ensuring that a vulnerable package never reaches your production environment.
             </p>
           </div>
         </div>
